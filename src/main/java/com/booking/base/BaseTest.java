@@ -30,7 +30,6 @@ public class BaseTest {
 
         BrowserDriverFactory factory = new BrowserDriverFactory(browser, log);
         driver = factory.createDriver();
-        driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(DEFAULT_PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(IMPLICITLY_WAIT, TimeUnit.SECONDS);
 

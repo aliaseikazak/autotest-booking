@@ -67,6 +67,7 @@ public class TestUtilities extends BaseTest {
         return (new SimpleDateFormat("HHmmssSSS").format(new Date()));
     }
 
+
     /**
      * Get logs from browser console
      */
