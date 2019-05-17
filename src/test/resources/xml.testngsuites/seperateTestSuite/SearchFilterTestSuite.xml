@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="SearchTravelTestSuite" verbose="1" parallel="tests" thread-count="3">
+
+    <test name="SearchTravelTest">
+        <classes>
+            <class name="com.booking.search.SearchFilterTest" />
+        </classes>
+    </test>
+
+</suite>

@@ -1,28 +1,29 @@
 package com.booking.pages;
 
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+
+import static java.lang.Math.random;
 
 public abstract class BasePageObject {
 
     private static final int DEFAULT_TIMEOUT = 10;
 
-    private WebDriver driver;
+    WebDriver driver;
     Logger log;
 
     BasePageObject(WebDriver driver, Logger log) {
         this.driver = driver;
         this.log = log;
     }
-
-    /**
-     * Open page with given URL
-     */
-    public abstract void openPage();
 
     /**
      * Open page with given URL
@@ -39,9 +40,14 @@ public abstract class BasePageObject {
     }
 
     /**
+     * Check that opened right page
+     */
+    public abstract void isOpenedRightPage();
+
+    /**
      * Wait for the element to present
      */
-    private void waitForElementPresent(By locator) {
+    protected void waitForElementPresent(By locator) {
         new WebDriverWait(driver, DEFAULT_TIMEOUT).until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
 
@@ -63,7 +69,7 @@ public abstract class BasePageObject {
      * Highlight the element
      */
     private void highlightElement(By locator) {
-        ((JavascriptExecutor) driver).executeScript("\"arguments[0].style.border='3px solid green'",
+        ((JavascriptExecutor) driver).executeScript("arguments[0].style.border='3px solid green'",
                 driver.findElement(locator));
     }
 
@@ -71,14 +77,14 @@ public abstract class BasePageObject {
      * Unhighlight the element
      */
     private void unhighlightElement(By locator) {
-        ((JavascriptExecutor) driver).executeScript("\"arguments[0].style.border='0px'",
+        ((JavascriptExecutor) driver).executeScript("arguments[0].style.border='0px'",
                 driver.findElement(locator));
     }
 
     /**
      * Find element using given locator
      */
-    private WebElement find(By locator) {
+    protected WebElement find(By locator) {
         waitForElementPresent(locator);
         return driver.findElement(locator);
     }
@@ -94,7 +100,7 @@ public abstract class BasePageObject {
      * Click on element with given locator when its visible
      */
     protected void click(By locator) {
-        log.info(String.format("Clicking element '%s', located: '%s'", driver.findElement(locator).getText(), locator));
+        log.info(String.format("Clicking element, located: '%s'", locator));
         highlightElement(locator);
         find(locator).click();
         unhighlightElement(locator);
@@ -104,6 +110,7 @@ public abstract class BasePageObject {
      * Type given text into element with given locator when its visible
      */
     protected void type(String text, By locator) {
+        log.info(String.format("Typing text '%s' into text box, located: '%s'", text, locator));
         highlightElement(locator);
         find(locator).sendKeys(text);
         unhighlightElement(locator);
@@ -114,5 +121,16 @@ public abstract class BasePageObject {
      */
     public String getCurrentUrl() {
         return driver.getCurrentUrl();
+    }
+
+    protected static int set_iRandom_number(int iFrom, int iTo) {
+        return iFrom + (int) (random() * iTo);
+    }
+
+    protected void selectDropdownByValue(By locator, int value) {
+        log.info(String.format("Selecting dropdown value '%s' ", value));
+        WebElement dropdownElement = find(locator);
+        Select dropdown = new Select(dropdownElement);
+        dropdown.selectByValue(String.format("%d", value));
     }
 }
