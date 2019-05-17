@@ -26,6 +26,7 @@ public class SearchFilterTest extends TestUtilities {
 
         // searching
         ResultPage resultPage = mainPage.searchTravel(city, days, adults, kids, rooms);
+        resultPage.isOpenedRightPage();
         resultPage.checkFilters(city, adults, kids, rooms);
     }
 }

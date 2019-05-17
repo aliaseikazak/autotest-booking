@@ -16,7 +16,6 @@ import java.util.List;
 
 public class TestUtilities extends BaseTest {
 
-    // todo: remove after develop
     protected void sleep(long millis) {
         try {
             Thread.sleep(millis);

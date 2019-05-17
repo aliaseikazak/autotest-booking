@@ -4,7 +4,6 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.List;
@@ -14,6 +13,7 @@ import static com.booking.utilities.PropertyManager.getProperty;
 public class MainPage extends BasePageObject {
 
     private static final String BASE_URL = getProperty("main.page.url");
+    private static final String GETAWAY_SALE_TOPIC = getProperty("main.page.banner1.topic");
 
     private By BASE_ELEMENT = By.id("logo_no_globe_new_logo");
     private By SEARCH_TBX = By.id("ss");
@@ -22,8 +22,13 @@ public class MainPage extends BasePageObject {
     private By CHECK_IN_CHECK_OUT_BTN = By.xpath("//div[@class='xp__dates-inner']");
     private By CURRENT_DATE_LB = By.xpath("//td[contains(@class, 'bui-calendar__date bui-calendar__date--today')]");
     private By GUESTS_TOGGLE = By.id("xp__guests__toggle");
-    private String[] props_names = {"group_adults", "group_children", "no_rooms"};
+    private String[] propsNames = {"group_adults", "group_children", "no_rooms"};
     private By SEARCH_BTN = By.xpath("//button[@data-sb-id='main']");
+    private By GETAWAY_SALE_BUNNER = By.id("dealsCampaignGetaway2019");
+    private By GETAWAY_SALE_BUNNER_TOPIC = By.xpath("//div[@id='dealsCampaignGetaway2019']" +
+            "//h1[@class='bui-banner__title']");
+    private By GETAWAY_SALE_BUNNER_BTN = By.xpath("//div[@id='dealsCampaignGetaway2019']//a");
+    private By GETAWAY_SALE_BUNNER_CLOSE_BTN = By.id("btn_deals_index_banner_getaway2019_close");
 
     public MainPage(WebDriver driver, Logger log) {
         super(driver, log);
@@ -40,16 +45,17 @@ public class MainPage extends BasePageObject {
 
     @Override
     public void isOpenedRightPage() {
+        log.info("Checking that opened right page: MainPage");
         Assert.assertTrue(isElementPresent(BASE_ELEMENT), "Invalid page open");
     }
 
     private void search_suggested_destinations(String destination) {
         log.info("Choosing destination");
         type(destination, SEARCH_TBX);
-        List<WebElement> search_results = findAll(LIST_SEARCH_RESULTS_LB);
-        for (WebElement search_result : search_results) {
-            if (search_result.getText().equals(destination)) {
-                search_result.click();
+        List<WebElement> searchResults = findAll(LIST_SEARCH_RESULTS_LB);
+        for (WebElement searchResult : searchResults) {
+            if (searchResult.getText().equals(destination)) {
+                searchResult.click();
             }
         }
         click(TOPIC);
@@ -68,12 +74,12 @@ public class MainPage extends BasePageObject {
         click(GUESTS_TOGGLE);
         int[] params = {adults, kids, rooms};
         int count;
-        for (int i = 0; i < props_names.length; i++) {
+        for (int i = 0; i < propsNames.length; i++) {
             By group = By.xpath(String.format("//*[@id='%s']/..//span[@class='bui-stepper__display']",
-                    props_names[i]));
+                    propsNames[i]));
             if (Integer.parseInt(find(group).getText()) > params[i]) {
                 By subtract_btn = By.xpath(String.format("//*[@id='%s']/..//button[contains(@class,'subtract-button')]",
-                        props_names[i]));
+                        propsNames[i]));
                 count = Math.abs(Integer.parseInt(find(group).getText()) - params[i]);
                 while (count != 0) {
                     click(subtract_btn);
@@ -81,7 +87,7 @@ public class MainPage extends BasePageObject {
                 }
             } else if (Integer.parseInt(find(group).getText()) < params[i]) {
                 By subtract_btn = By.xpath(String.format("//*[@id='%s']/..//button[contains(@class,'add-button')]",
-                        props_names[i]));
+                        propsNames[i]));
                 count = Math.abs(Integer.parseInt(find(group).getText()) - params[i]);
                 while (count != 0) {
                     click(subtract_btn);
@@ -106,5 +112,30 @@ public class MainPage extends BasePageObject {
         fill_guests_toggle(adults, kids, rooms);
         click(SEARCH_BTN);
         return new ResultPage(driver, log);
+    }
+
+    public GetawaySalePage openGetawaySaleBanner() {
+        log.info("Check that 'The Great Getaway Sale' banner on the main page and go to page");
+        if (isElementPresent(GETAWAY_SALE_BUNNER)) {
+            Assert.assertEquals(find(GETAWAY_SALE_BUNNER_TOPIC).getText(), GETAWAY_SALE_TOPIC,
+                    "The wrong banner is displayed");
+        } else {
+            log.error("No needed bunner");
+        }
+        click(GETAWAY_SALE_BUNNER_BTN);
+        return new GetawaySalePage(driver, log);
+    }
+
+    public void closeGetawaySaleBunner() {
+        if (isElementPresent(GETAWAY_SALE_BUNNER)) {
+            Assert.assertEquals(find(GETAWAY_SALE_BUNNER_TOPIC).getText(), GETAWAY_SALE_TOPIC,
+                    "The wrong banner is displayed");
+        } else {
+            log.error("No needed bunner");
+        }
+        click(GETAWAY_SALE_BUNNER_CLOSE_BTN);
+        if (isElementPresent(GETAWAY_SALE_BUNNER)) {
+            log.error("Bunner not closed");
+        }
     }
 }

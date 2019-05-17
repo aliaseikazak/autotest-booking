@@ -11,5 +11,6 @@ public class PositiveTest extends TestUtilities {
         // open main page
         MainPage mainPage = new MainPage(driver, log);
         mainPage.openPage();
+        mainPage.isOpenedRightPage();
     }
 }

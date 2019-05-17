@@ -74,14 +74,6 @@ public abstract class BasePageObject {
     }
 
     /**
-     * Unhighlight the element
-     */
-    private void unhighlightElement(By locator) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].style.border='0px'",
-                driver.findElement(locator));
-    }
-
-    /**
      * Find element using given locator
      */
     protected WebElement find(By locator) {
@@ -103,7 +95,6 @@ public abstract class BasePageObject {
         log.info(String.format("Clicking element, located: '%s'", locator));
         highlightElement(locator);
         find(locator).click();
-        unhighlightElement(locator);
     }
 
     /**
@@ -113,7 +104,6 @@ public abstract class BasePageObject {
         log.info(String.format("Typing text '%s' into text box, located: '%s'", text, locator));
         highlightElement(locator);
         find(locator).sendKeys(text);
-        unhighlightElement(locator);
     }
 
     /**

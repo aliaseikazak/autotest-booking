@@ -12,6 +12,7 @@ public class ResultPage extends BasePageObject {
     private By ADULTS = By.id("group_adults");
     private By CHILDREN = By.id("group_children");
     private By ROOMS = By.id("no_rooms");
+    private By BOOKING_LOGO = By.id("logo_no_globe_new_logo");
 
     ResultPage(WebDriver driver, Logger log) {
         super(driver, log);
@@ -19,6 +20,7 @@ public class ResultPage extends BasePageObject {
 
     @Override
     public void isOpenedRightPage() {
+        log.info("Checking that opened right page: ResultPage");
         Assert.assertTrue(isElementPresent(BASE_ELEMENT), "Invalid page open");
     }
 
@@ -34,4 +36,8 @@ public class ResultPage extends BasePageObject {
                 "Filter room does not work");
     }
 
+    public MainPage goToMainPage() {
+        find(BOOKING_LOGO).click();
+        return new MainPage(driver, log);
+    }
 }
