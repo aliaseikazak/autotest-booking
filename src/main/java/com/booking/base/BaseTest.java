@@ -41,6 +41,6 @@ public class BaseTest {
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         log.info("TEAR_DOWN: Closing driver");
-        driver.quit();
+//        driver.quit();
     }
 }

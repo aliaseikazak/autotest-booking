@@ -29,6 +29,9 @@ public class MainPage extends BasePageObject {
             "//h1[@class='bui-banner__title']");
     private By GETAWAY_SALE_BUNNER_BTN = By.xpath("//div[@id='dealsCampaignGetaway2019']//a");
     private By GETAWAY_SALE_BUNNER_CLOSE_BTN = By.id("btn_deals_index_banner_getaway2019_close");
+    private By CAMPGROUNDS_LB = By.xpath("//div[@class='bui-card__content']/a[contains(text(), 'Campgrounds')]");
+    private By APARTMENTS_BLOCK = By.xpath("//*[@class='d-bh-promotion--block-title']");
+    private By NEXT_APARTMENT_TYPE_BTN = By.xpath("(//button[@data-bui-ref='carousel-next'])[1]");
 
     public MainPage(WebDriver driver, Logger log) {
         super(driver, log);
@@ -137,5 +140,23 @@ public class MainPage extends BasePageObject {
         if (isElementPresent(GETAWAY_SALE_BUNNER)) {
             log.error("Bunner not closed");
         }
+
+    }
+
+//    public void chooseTypeOfApartment(PageElement.PageElementEnum selElement) {
+//
+//        clickOnElement(selElement);
+//    }
+    public CampgroundsPage chooseCampgrounds() {
+        scrollPageToElementJE(find(APARTMENTS_BLOCK));
+        if (!find(CAMPGROUNDS_LB).isDisplayed()) {
+            find(NEXT_APARTMENT_TYPE_BTN).click();
+            find(APARTMENTS_BLOCK).click();
+        } else {
+            find(CAMPGROUNDS_LB).click();
+            switchToOpenedTab();
+            return new CampgroundsPage(driver, log);
+        }
+        return chooseCampgrounds();
     }
 }
