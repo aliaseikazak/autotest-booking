@@ -59,7 +59,7 @@
                 <configuration>
                     <reportsDirectory>${basedir}/test-output</reportsDirectory>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/xmltestsuites/testng.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/xml/testngsuites/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
