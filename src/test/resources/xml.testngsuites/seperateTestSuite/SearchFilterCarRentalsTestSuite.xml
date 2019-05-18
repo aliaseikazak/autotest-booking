@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="SearchFilterCarRentalsTestSuite" verbose="1">
+
+    <test name="SearchFilterCarRentalsTest-CH">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.booking.carrental.search.SearchFilterCarRentalsTest" />
+        </classes>
+    </test>
+
+    <test name="SearchFilterCarRentalsTest-FF">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.booking.carrental.search.SearchFilterCarRentalsTest" />
+        </classes>
+    </test>
+
+</suite>

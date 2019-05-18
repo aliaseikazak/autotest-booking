@@ -1,0 +1,33 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="CampgroundsTestSuite" verbose="1" parallel="tests" thread-count="4">
+
+    <test name="CampgroundsTest-CH">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.booking.accommodation.typesofapartment.CampgroundsTest" />
+        </classes>
+    </test>
+
+    <test name="CampgroundsTest-FF">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.booking.accommodation.typesofapartment.CampgroundsTest" />
+        </classes>
+    </test>
+
+    <test name="CampgroundsTest-CH-headless">
+        <parameter name="browser" value="chrome-headless"/>
+        <classes>
+            <class name="com.booking.accommodation.typesofapartment.CampgroundsTest" />
+        </classes>
+    </test>
+
+    <test name="CampgroundsTest-FF-headless">
+        <parameter name="browser" value="firefox-headless"/>
+        <classes>
+            <class name="com.booking.accommodation.typesofapartment.CampgroundsTest" />
+        </classes>
+    </test>
+
+</suite>

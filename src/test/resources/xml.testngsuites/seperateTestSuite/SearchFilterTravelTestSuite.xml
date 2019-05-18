@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="SearchFilterTravelTestSuite" verbose="1" parallel="tests" thread-count="3">
+
+    <test name="SearchFilterTravelTest-CH">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.booking.accommodation.search.SearchFilterTravelTest" />
+        </classes>
+    </test>
+
+    <test name="SearchFilterTravelTest-Firefox">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.booking.accommodation.search.SearchFilterTravelTest" />
+        </classes>
+    </test>
+
+</suite>

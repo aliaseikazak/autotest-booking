@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="GetawaySaleTestSuite" verbose="1">
+
+    <test name="GetawaySaleTest-CH">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.booking.accommodation.banner.GetawaySaleTest" />
+        </classes>
+    </test>
+
+    <test name="GetawaySaleTest-FF">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.booking.accommodation.banner.GetawaySaleTest" />
+        </classes>
+    </test>
+
+</suite>
