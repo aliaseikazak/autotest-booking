@@ -1,4 +1,4 @@
-package com.booking.typesofapartments;
+package com.booking.accommodation.typesofapartment;
 
 import com.booking.pages.CampgroundsPage;
 import com.booking.pages.MainPage;

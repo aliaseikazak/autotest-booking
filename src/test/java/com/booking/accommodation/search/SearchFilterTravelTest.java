@@ -1,4 +1,4 @@
-package com.booking.search;
+package com.booking.accommodation.search;
 
 import com.booking.pages.MainPage;
 import com.booking.pages.ResultPage;
@@ -8,10 +8,10 @@ import org.testng.annotations.Test;
 
 import java.util.Map;
 
-public class SearchFilterTest extends TestUtilities {
+public class SearchFilterTravelTest extends TestUtilities {
 
     @Test(priority = 1, dataProvider = "csvReader", dataProviderClass = CsvDataProviders.class)
-    public void searchFilterTest(Map<String, String> testData) {
+    public void searchFilterTravelTest(Map<String, String> testData) {
         // data
         String num = testData.get("num"), city = testData.get("city");
         int days = Integer.parseInt(testData.get("days")), adults = Integer.parseInt(testData.get("adults")),

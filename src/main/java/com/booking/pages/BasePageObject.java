@@ -53,20 +53,6 @@ public abstract class BasePageObject {
     }
 
     /**
-     * Wait for the element to be visible
-     */
-    protected void waitForElementVisible(By locator) {
-        new WebDriverWait(driver, DEFAULT_TIMEOUT).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
-    }
-
-    /**
-     * Wait for the element to be enabled
-     */
-    protected void waitForElementEnabled(By locator) {
-        new WebDriverWait(driver, DEFAULT_TIMEOUT).until(ExpectedConditions.elementToBeClickable(locator));
-    }
-
-    /**
      * Highlight the element
      */
     private void highlightElement(By locator) {
@@ -105,13 +91,6 @@ public abstract class BasePageObject {
         log.info(String.format("Typing text '%s' into text box, located: '%s'", text, locator));
         highlightElement(locator);
         find(locator).sendKeys(text);
-    }
-
-    /**
-     * Get URL of current page from browser
-     */
-    public String getCurrentUrl() {
-        return driver.getCurrentUrl();
     }
 
     protected static int set_iRandom_number(int iFrom, int iTo) {
@@ -153,6 +132,6 @@ public abstract class BasePageObject {
     }
 
     void clickOnElement(PageElement.PageElementEnum selElement) {
-        PageElement.getElement(driver, selElement);
+        PageElement.clickElement(driver, selElement);
     }
 }

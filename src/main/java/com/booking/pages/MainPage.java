@@ -143,10 +143,6 @@ public class MainPage extends BasePageObject {
 
     }
 
-//    public void chooseTypeOfApartment(PageElement.PageElementEnum selElement) {
-//
-//        clickOnElement(selElement);
-//    }
     public CampgroundsPage chooseCampgrounds() {
         scrollPageToElementJE(find(APARTMENTS_BLOCK));
         if (!find(CAMPGROUNDS_LB).isDisplayed()) {
@@ -158,5 +154,17 @@ public class MainPage extends BasePageObject {
             return new CampgroundsPage(driver, log);
         }
         return chooseCampgrounds();
+    }
+
+    public FlightsPage openFlightsPage(PageElement.PageElementEnum selElement) {
+        clickOnElement(selElement);
+        switchToOpenedTab();
+        return new FlightsPage(driver, log);
+    }
+
+    public CarRentalsPage openCarRentalsPage(PageElement.PageElementEnum selElement) {
+        clickOnElement(selElement);
+        switchToOpenedTab();
+        return new CarRentalsPage(driver, log);
     }
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="SearchFilterFlightTestSuite" verbose="1">
+
+    <test name="SearchFilterFlightTest-CH">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.booking.flight.search.SearchFilterFlightTest" />
+        </classes>
+    </test>
+
+    <test name="SearchFilterFlightTest-FF">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.booking.flight.search.SearchFilterFlightTest" />
+        </classes>
+    </test>
+
+</suite>

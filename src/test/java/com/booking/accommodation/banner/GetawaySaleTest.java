@@ -1,4 +1,4 @@
-package com.booking.banners;
+package com.booking.accommodation.banner;
 
 import com.booking.pages.GetawaySalePage;
 import com.booking.pages.MainPage;

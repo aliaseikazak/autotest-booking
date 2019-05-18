@@ -4,11 +4,14 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 import static com.booking.utilities.PropertyManager.getSettingsProperty;
 import static org.openqa.selenium.remote.BrowserType.*;
@@ -55,11 +58,24 @@ public class BrowserDriverFactory {
             case CHROME:
                 driver.set(new ChromeDriver(setChromeProfile()));
                 break;
-
+            case "chrome-headless":
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--headless");
+                driver.set(new ChromeDriver(chromeOptions));
+                break;
             case FIREFOX:
                 driver.set(new FirefoxDriver(setFireFoxProfile()));
                 break;
-
+            case "firefox-headless":
+                FirefoxBinary firefoxBinary = new FirefoxBinary();
+                firefoxBinary.addCommandLineOptions("--headless");
+                FirefoxOptions firefoxOptions = new FirefoxOptions();
+                firefoxOptions.setBinary(firefoxBinary);
+                driver.set(new FirefoxDriver(firefoxOptions));
+                break;
+            case PHANTOMJS:
+                driver.set(new PhantomJSDriver());
+                break;
             default:
                 log.info(String.format("Do not know how to start: '%s' driver, starting chrome.", browser));
                 driver.set(new ChromeDriver(setChromeProfile()));
@@ -88,5 +104,15 @@ public class BrowserDriverFactory {
                 .addPreference(getGetLocaleFuncFF, getLocaleName);
         firefoxOptions.addArguments(getIncognitoFF);
         return firefoxOptions;
+    }
+
+    public WebDriver createChromeWithMobileEmulation(String deviceName) {
+        log.info(String.format("Starting driver with %s emulation]", deviceName));
+        Map<String, String> mobileEmulation = new HashMap<>();
+        mobileEmulation.put("deviceName", deviceName);
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
+        driver.set(new ChromeDriver(chromeOptions));
+        return driver.get();
     }
 }

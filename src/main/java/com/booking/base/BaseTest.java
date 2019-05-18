@@ -22,17 +22,19 @@ public class BaseTest {
     protected String testName;
     protected String testMethodName;
 
-    @Parameters({"browser"})
+    @Parameters({"browser", "deviceName"})
     @BeforeMethod(alwaysRun = true)
-    public void setUp(Method method, @Optional String browser, ITestContext ctx) {
+    public void setUp(Method method, @Optional String browser, @Optional String deviceName, ITestContext ctx) {
         String testName = ctx.getCurrentXmlTest().getName();
         log = LogManager.getLogger(testName);
-
         BrowserDriverFactory factory = new BrowserDriverFactory(browser, log);
-        driver = factory.createDriver();
+        if (deviceName != null) {
+            driver = factory.createChromeWithMobileEmulation(deviceName);
+        } else {
+            driver = factory.createDriver();
+        }
         driver.manage().timeouts().pageLoadTimeout(DEFAULT_PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(IMPLICITLY_WAIT, TimeUnit.SECONDS);
-
         this.testSuiteName = ctx.getSuite().getName();
         this.testName = testName;
         this.testMethodName = method.getName();
@@ -41,6 +43,6 @@ public class BaseTest {
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         log.info("TEAR_DOWN: Closing driver");
-//        driver.quit();
+        driver.quit();
     }
 }
